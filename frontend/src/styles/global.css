@@ -1,0 +1,8 @@
+@import "tailwindcss";
+
+/* ⬇️ Activa Flowbite como plugin para Tailwind v4 */
+@plugin "flowbite/plugin";
+
+/* ⬇️ Dile a Tailwind que también lea las clases de Flowbite y Flowbite React */
+@source "../node_modules/flowbite";
+@source "../node_modules/flowbite-react";

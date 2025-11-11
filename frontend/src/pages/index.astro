@@ -1,0 +1,12 @@
+---
+import MainLayout from "../layouts/Layout.astro";
+import Home from "../components/Home.jsx";
+import Navbar from "../components/Navbar.jsx";
+import Footer from "../components/Footer.jsx";
+---
+
+<MainLayout title="Home | Delirio de Banquetes">
+  <Navbar client:load />
+  <Home client:load />
+  <Footer client:load />
+</MainLayout>
