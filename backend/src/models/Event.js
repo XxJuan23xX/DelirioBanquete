@@ -23,7 +23,7 @@ const eventSchema = new mongoose.Schema(
       min: 1,
     },
     package: {
-      type: String, // luego lo puedes cambiar a ref a otro modelo de "Package"
+      type: String,
       required: true,
     },
     location: {
@@ -38,6 +38,15 @@ const eventSchema = new mongoose.Schema(
       type: String,
       enum: ['Pendiente', 'Confirmado', 'Cancelado'],
       default: 'Pendiente',
+    },
+
+    // 👇 NUEVOS CAMPOS AQUÍ, dentro del primer objeto
+    title: {
+      type: String,
+      required: true,
+    },
+    imageUrl: {
+      type: String, // URL de ImgBB
     },
   },
   {
