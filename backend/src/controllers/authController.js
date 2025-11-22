@@ -70,19 +70,30 @@ const registerUser = async (req, res) => {
   }
 };
 
-// POST /api/auth/login (sin cambios relevantes)
+// POST /api/auth/login
 const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
+
     if (!email || !password) {
-      return res.status(400).json({ message: 'Correo y contraseña son obligatorios' });
+      return res
+        .status(400)
+        .json({ message: 'Correo y contraseña son obligatorios' });
     }
 
     const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ message: 'Correo o contraseña incorrectos' });
+    if (!user) {
+      return res
+        .status(400)
+        .json({ message: 'Correo o contraseña incorrectos' });
+    }
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ message: 'Correo o contraseña incorrectos' });
+    if (!isMatch) {
+      return res
+        .status(400)
+        .json({ message: 'Correo o contraseña incorrectos' });
+    }
 
     const token = generateToken(user._id);
 

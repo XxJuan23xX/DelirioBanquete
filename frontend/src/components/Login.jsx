@@ -37,8 +37,8 @@ export default function Login() {
         setErrorMsg(data.message || "Correo o contraseña incorrectos");
       } else {
         // Guardamos token y user en localStorage (para futuras peticiones)
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("user", JSON.stringify(data.user));
+        localStorage.setItem("delirio:token", data.token);
+        localStorage.setItem("delirio:user", JSON.stringify(data.user));
 
         // Redirigir al home o dashboard
         window.location.href = "/";

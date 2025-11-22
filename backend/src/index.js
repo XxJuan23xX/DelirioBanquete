@@ -21,7 +21,9 @@ app.get('/', (req, res) => {
 
 app.use('/api/events', eventRoutes);
 app.use('/api/auth', authRoutes); // <--- NUEVO
-app.use("/images", express.static(path.join(__dirname, "public/images")));
+app.use(
+  express.static(path.join(__dirname, "..", "public"))
+);
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
