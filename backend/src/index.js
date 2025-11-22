@@ -3,6 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const connectDB = require('./config/db');
+const path = require("path");
 
 const eventRoutes = require('./routes/eventRoutes');
 const authRoutes = require('./routes/authRoutes'); // <--- NUEVO
@@ -20,6 +21,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/events', eventRoutes);
 app.use('/api/auth', authRoutes); // <--- NUEVO
+app.use("/images", express.static(path.join(__dirname, "public/images")));
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {

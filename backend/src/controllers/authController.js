@@ -50,6 +50,7 @@ const registerUser = async (req, res) => {
       password: hashedPassword,
       phone,
       role, // asignado por el servidor según canal
+      avatar: user.avatar,
     });
 
     const token = generateToken(user._id);
@@ -94,6 +95,7 @@ const loginUser = async (req, res) => {
         name: user.name,
         email: user.email,
         role: user.role,
+        avatar: user.avatar,
       },
       token,
     });
