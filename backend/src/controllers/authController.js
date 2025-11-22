@@ -9,26 +9,22 @@ const generateToken = (userId) =>
 
 // POST /api/auth/register
 const registerUser = async (req, res) => {
-  
   try {
-    console.log('HEADERS REGISTER:', {
-  channel: req.get('x-app-channel'),
-  appKey: req.get('x-app-key'),
-  all: req.headers,
-});
-
     const { name, email, password, phone } = req.body;
 
     if (!name || !email || !password || !phone) {
-      return res.status(400).json({ message: 'Nombre, correo, teléfono y contraseña son obligatorios' });
+      return res
+        .status(400)
+        .json({ message: 'Nombre, correo, teléfono y contraseña son obligatorios' });
     }
 
+    // ¿Correo ya registrado?
     const userExist = await User.findOne({ email });
     if (userExist) {
       return res.status(400).json({ message: 'El correo ya está registrado' });
     }
 
-    // --- Canal y seguridad ---
+    // Determinar canal y rol
     const channel = (req.get('x-app-channel') || 'web').toLowerCase();
     let role = 'cliente';
 
@@ -40,17 +36,18 @@ const registerUser = async (req, res) => {
       role = 'vendedor';
     }
 
-    // Hash password
+    // Hashear contraseña
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
+    // Crear usuario (avatar usa el default del schema)
     const user = await User.create({
       name,
       email,
       password: hashedPassword,
       phone,
-      role, // asignado por el servidor según canal
-      avatar: user.avatar,
+      role,
+      // avatar: no lo mandamos, se usa el default "/images/default-avatar.png"
     });
 
     const token = generateToken(user._id);
@@ -63,6 +60,7 @@ const registerUser = async (req, res) => {
         email: user.email,
         phone: user.phone,
         role: user.role,
+        avatar: user.avatar,
       },
       token,
     });
